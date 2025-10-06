@@ -10,7 +10,8 @@
     "db:push": "drizzle-kit push",
     "db:studio": "drizzle-kit studio",
     "docker:up": "docker compose up -d",
-    "docker:down": "docker compose down"
+    "docker:down": "docker compose down",
+    "vercel-build": "pnpm build"
   },
   "dependencies": {
     "@hono/node-server": "^1.19.5",

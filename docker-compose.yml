@@ -1,0 +1,30 @@
+services:
+  ecommerce_db:
+    image: postgres:17
+    container_name: ecommerce_db
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: ecommerce_db
+    volumes:
+      - ecommerce_db_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+      
+    # 🌟 Balanced Resource Limits for Development 🌟
+    deploy:
+      resources:
+        limits:
+          # Balanced RAM limit: 1 Gigabyte (1g)
+          # Provides enough memory for caching and simultaneous connections,
+          # but keeps the total usage manageable on your host machine.
+          memory: 1g 
+          
+          # Balanced CPU limit: Half a CPU core (0.5)
+          # Ensures the database has enough processing power for faster queries
+          # without monopolizing a full core.
+          cpus: '0.5' 
+    # ---------------------------------------------
+
+volumes:
+  ecommerce_db_data:

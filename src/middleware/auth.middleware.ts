@@ -3,7 +3,9 @@ import { factory } from "../lib/factory.js";
 
 export const authMiddleware = factory.createMiddleware(async (c, next) => {
     try {
-        const session = await auth.api.getSession({ headers: c.req.raw.headers });
+        const rawRequest = c.req.raw as Request; 
+
+        const session = await auth.api.getSession({ headers: rawRequest.headers });
         c.set("user", session?.user ?? null);
         c.set("session", session?.session ?? null);
     } catch (err) {

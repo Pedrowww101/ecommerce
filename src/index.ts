@@ -11,14 +11,15 @@ const app = new Hono<Env>()
 .basePath("/api")
 
 .use(logger())
-.use("/auth/*", (c, next) => {
+.use("/auth/*", async (c, next) => {
+  console.log("CORS middleware start");  
   const authUrl = env(c).BETTER_AUTH_URL; 
-  
-  return authCorsMiddleware(authUrl)(c, next);
+  await authCorsMiddleware(authUrl)(c, next);
+  console.log("CORS middleware finished");
 })
 
-.on(["POST", "GET"], "/auth/*", (c) => {
-	return auth.handler(c.req.raw);
+.on(["POST", "GET"], "/auth/*", async (c) => {
+	return await auth.handler(c.req.raw);
 })
 
 .use("*", authMiddleware)
